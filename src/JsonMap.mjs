@@ -24,7 +24,7 @@ export class JsonMap {
                 this.createMap(path ? `${path}.${key}` : key, value);
             });
         } else if (Array.isArray(jsonNode)) {
-            jsonNode = this.sortArrayByOriginalFirstKey(jsonNode);
+            jsonNode = this.sortArrayByPrimaryKey(jsonNode);
             jsonNode.forEach((value, index) => {
                 this.createMap(`${path}[${index}]`, value);
             });
@@ -33,13 +33,17 @@ export class JsonMap {
         }
     }
 
-    sortArrayByOriginalFirstKey(array) {
+    sortArrayByPrimaryKey(array) {
         return array.sort((a, b) => {
             if (typeof a === "object" && typeof b === "object" && a !== null && b !== null) {
-                const firstKeyA = Object.keys(a)[0];
-                const firstKeyB = Object.keys(b)[0];
+                if (!this.primaryKey || !(this.primaryKey in a) || !(this.primaryKey in b)) {
+                    console.warn(`Primary key '${this.primaryKey}' not found in some elements, sorting based on the first key.`);
+                    const firstKeyA = Object.keys(a)[0];
+                    const firstKeyB = Object.keys(b)[0];
+                    return firstKeyA && firstKeyB ? firstKeyA.localeCompare(firstKeyB) : 0;
+                }
 
-                return firstKeyA && firstKeyB ? 0 : firstKeyA ? -1 : 1;
+                return a[this.primaryKey].toString().localeCompare(b[this.primaryKey].toString());
             }
             return 0; // Maintain original order for non-object arrays
         });
