@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Comparison Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        h1 { text-align: center; }
+        .summary { width: 100%; display: flex; justify-content: center; gap: 20px; padding: 15px; font-weight: bold; background-color: #141415; color: white; }
+        .summary-icon { font-size: 22px; margin-right: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; transition: background-color 0.3s; }
+        th { background-color: ${themeColor}; color: white; }
+        td:hover { background-color: #ddd; }
+        .failed { background-color: #e74c3c; color: white; }
+        .none { background-color: #ccc; color: white; text-align: center; font-weight: bold; }
+        .collapsible { cursor: pointer; font-weight: bold; padding: 10px; background-color: ${themeColor}; color: white; border-radius: 5px; display: flex; align-items: center; }
+        .collapsible::before { content: "➕"; margin-right: 8px; }
+        .content { display: none; padding: 10px; border: 1px solid #ddd; }
+    </style>
+    <script>
+        function toggleSection(id) {
+            var section = document.getElementById(id);
+            section.style.display = section.style.display === "none" ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+    <h1>JSON Comparison Report</h1>
+
+    <div class="summary">
+        ✅ Total Fields Compared: ${totalFields}  
+        🎯 Successful Matches: ${successfulMatches}  
+        ❌ Failed Matches: ${failedMatches}  
+        ${statusIcon} Status: ${status}
+    </div>
+
+    <h2>Mismatch Breakdown</h2>
+    <table>
+        <tr><th>Mismatch Type</th><th>Count</th></tr>
+        ${mismatchBreakdown}
+    </table>
+
+    <h2>Detailed Errors</h2>
+    <table>
+        <tr><th>Type</th><th>Message</th></tr>
+        ${detailedErrors}
+    </table>
+
+    <h2 class="collapsible" onclick="toggleSection('successfulMatches')">Successful Matches</h2>
+    <div id="successfulMatches" class="content">
+        <table>
+            <tr><th>Matched Key</th><th>Value</th></tr>
+            ${successfulMatchesTable}
+        </table>
+    </div>
+</body>
+</html>

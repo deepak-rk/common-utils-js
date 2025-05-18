@@ -1,0 +1,29 @@
+{
+  "name": "common-utils-js",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A JS utils project ",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/my-typescript-project.git"
+  },
+  "keywords": [
+    "typescript",
+    "project",
+    "template"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "set-script": "^1.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0"
+  }
+}
